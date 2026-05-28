@@ -17,14 +17,13 @@ public class TwoSum {
     }
 
     public int[] twoSumOptimized(int[] nums, int target) {
-        Map<Integer, Integer> indicesByValue = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
-            if (indicesByValue.containsKey(complement)) {
-                return new int[] {indicesByValue.get(complement), i};
-            }
-            indicesByValue.put(nums[i], i);
-        }
-        return null;
+        HashMap<Integer,Integer> indices = new HashMap<>();
+       for ( int i=0; i< nums.length;i++){
+           if (indices.containsKey(target-nums[i]))
+               return new int[]{i, indices.get(target-nums[i])};
+           indices.put(nums[i],i);
+       }
+       return null;
+
     }
 }
