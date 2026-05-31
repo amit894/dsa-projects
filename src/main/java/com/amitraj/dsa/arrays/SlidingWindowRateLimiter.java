@@ -7,33 +7,42 @@ import java.util.Queue;
 
 public class SlidingWindowRateLimiter {
     long windowSize;
-    int allowedRequests;
+    int requestLimit;
 
-    private class UserRequest{
-        long timestamp;
-
-        UserRequest (long timestamp){
-            this.timestamp =timestamp;
-
-        }
+    SlidingWindowRateLimiter(long windowSize,int requestLimit){
+        this.windowSize = windowSize;
+        this.requestLimit= requestLimit;
     }
 
+    private class UserRequest{
+        long timeStamp;
 
-
-    Queue<UserRequest> userRequests = new LinkedList<>();
-
-    boolean allowedRequests (){
-        while ((!userRequests.isEmpty()&& System.currentTimeMillis()-userRequests.peek().timestamp)>=windowSize) {
-            userRequests.remove();
+        UserRequest(long timeStamp){
+            this.timeStamp = timeStamp;
         }
 
-        if (userRequests.size()>= allowedRequests)
-            return false;
+    }
 
-            userRequests.add(new UserRequest(System.currentTimeMillis()));
-            
-        return true;
+    Queue <UserRequest> userRequests = new LinkedList<>();
+
+    boolean allowRequest(UserRequest u1){
+        if (userRequests.isEmpty()){
+            u1 = new UserRequest(System.currentTimeMillis());
+        }
+
+        while ((userRequests.peek().timeStamp+windowSize)<System.currentTimeMillis()){
+            userRequests.poll();
+        }
+
+        if(userRequests.size()>=requestLimit){
+            return false;
+        }
+
+        userRequests.add(u1);
+
+        return  true;
 
     }
 
 }
+

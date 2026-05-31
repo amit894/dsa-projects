@@ -7,34 +7,52 @@ import java.util.HashMap;
 
 public class FixedWindowRateLimiter {
     long windowSize;
-    int allowedRequests;
+    Integer requestLimit;
 
-    private class UserRequest{
-        long currentwindowStartTime;
-        int requestCount;
+    FixedWindowRateLimiter(long windowSize, Integer requestLimit){
+        this.windowSize = windowSize;
+        this.requestLimit = requestLimit;
 
     }
 
-    Map < String, UserRequest> userRequests = new HashMap<>();
+    public class UserRequest {
+        long currentWindowStart;
+        Integer requestCount;
 
-    public boolean allowedRequest(UserRequest u1){
+        UserRequest(long currentWindowStart, Integer requestCount){
+            this.currentWindowStart = currentWindowStart;
+            this.requestCount = requestCount;
+
+        }
+
+    }
+
+    HashMap<String, UserRequest> userRequests = new  HashMap<>();
+
+    boolean allowRequest(String userId){
+        UserRequest u1 = userRequests.get(userId);
+
         if (u1==null){
-            u1 = new UserRequest();
-            u1.currentwindowStartTime = System.currentTimeMillis();
+            u1 = new UserRequest(System.currentTimeMillis(),0);
+            userRequests.put(userId,u1);
+        }
+
+        if ((System.currentTimeMillis()-u1.currentWindowStart)> windowSize){
+            u1.currentWindowStart = System.currentTimeMillis();
             u1.requestCount = 0;
+
         }
-        if (( System.currentTimeMillis()-u1.currentwindowStartTime)> windowSize){
-            u1.currentwindowStartTime=System.currentTimeMillis();
-            u1.requestCount=0;
-        }
-        if(u1.requestCount>=allowedRequests){
-            System.out.println("Window exhausted for the given user");
+
+        if (u1.requestCount>=requestLimit){
             return false;
+
         }
 
         u1.requestCount++;
 
-        return true;
+        return  true;
+
     }
+
 
 }
