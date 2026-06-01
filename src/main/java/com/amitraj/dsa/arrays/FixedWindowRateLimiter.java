@@ -6,51 +6,45 @@ import java.util.*;
 import java.util.HashMap;
 
 public class FixedWindowRateLimiter {
+
     long windowSize;
-    Integer requestLimit;
+    int allowedRequestLimit;
 
-    FixedWindowRateLimiter(long windowSize, Integer requestLimit){
-        this.windowSize = windowSize;
-        this.requestLimit = requestLimit;
-
+    FixedWindowRateLimiter(long windowSize,  int allowedRequestLimit){
+        this.windowSize =  windowSize;
+        this.allowedRequestLimit = allowedRequestLimit;
     }
 
-    public class UserRequest {
+    private class UserRequest{
         long currentWindowStart;
-        Integer requestCount;
+        int requestCounter;
 
-        UserRequest(long currentWindowStart, Integer requestCount){
+        UserRequest(long currentWindowStart, int requestCounter){
             this.currentWindowStart = currentWindowStart;
-            this.requestCount = requestCount;
+            this. requestCounter = requestCounter;
 
         }
-
     }
 
-    HashMap<String, UserRequest> userRequests = new  HashMap<>();
+    HashMap<String, UserRequest> userRequests= new HashMap<>();
 
-    boolean allowRequest(String userId){
+    boolean allowRequest (String userId){
         UserRequest u1 = userRequests.get(userId);
-
-        if (u1==null){
-            u1 = new UserRequest(System.currentTimeMillis(),0);
-            userRequests.put(userId,u1);
+        if (u1==null)
+        { u1 = new UserRequest(System.currentTimeMillis(),0);
+           userRequests.put(userId,u1);
         }
 
-        if ((System.currentTimeMillis()-u1.currentWindowStart)> windowSize){
-            u1.currentWindowStart = System.currentTimeMillis();
-            u1.requestCount = 0;
-
-        }
-
-        if (u1.requestCount>=requestLimit){
+        if (( System.currentTimeMillis()-u1.currentWindowStart)>=windowSize)
+            {   u1.requestCounter = 0;
+                u1.currentWindowStart = System.currentTimeMillis();
+            }
+        if (u1.requestCounter>=allowedRequestLimit)
             return false;
 
-        }
+        u1.requestCounter++;
 
-        u1.requestCount++;
-
-        return  true;
+        return true;
 
     }
 

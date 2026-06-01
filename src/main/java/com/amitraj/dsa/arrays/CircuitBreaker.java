@@ -6,60 +6,47 @@ import java.util.Stack;
 
 public class CircuitBreaker {
     int failureThreshold;
-    long resetTimeOut;
-    public Status status;
-    int failureCount;
     long lastFailureTime;
+    long resetTimeout;
+    int failureCount;
+    public Status status;
 
-    CircuitBreaker(long requestTimeout, int failureThreshold,long resetTimeOut){
+    CircuitBreaker (int failureThreshold, int failureCount, long resetTimeout){
         this.failureThreshold = failureThreshold;
-        this.resetTimeOut = resetTimeOut;
-        this.status= Status.CLOSED;
-        this.failureCount = 0;
+        this.failureCount = failureCount;
+        this.resetTimeout = resetTimeout;
     }
 
+    enum Status {OPEN, CLOSED, HALF_OPEN};
 
-    public enum Status {
-        OPEN, CLOSED, HALF_OPEN
+    void recordSuccess(){
+        failureCount = 0;
+        if (status==Status.HALF_OPEN)
+            status=Status.CLOSED;
     }
+    void recordFailure (){
+        failureCount ++;
+        lastFailureTime = System.currentTimeMillis();
+        if (status==Status.HALF_OPEN)
+            status=Status.OPEN;
+        if (failureCount>=failureThreshold)
+            status=Status.OPEN;
 
+    }
 
     boolean allowRequest(){
+        if (status==Status.OPEN && (System.currentTimeMillis()-lastFailureTime)>resetTimeout)
+
+        { status = Status.HALF_OPEN;
+            return true;
+        }
         if (status == Status.CLOSED)
             return true;
-
-        if (status == Status.OPEN) {
-
-            if (System.currentTimeMillis()
-                    - lastFailureTime >= resetTimeOut) {
-                status = Status.HALF_OPEN;
-                return true;
-            }
-
+        if (status == Status.OPEN)
             return false;
-        }
-
+        
         return true;
-    };
-
-    void record_success(){
-        failureCount=0;
-        if (status==Status.HALF_OPEN){
-            status=Status.CLOSED;
-        }
-
     }
 
-    void record_failure(){
-        failureCount ++;
-        lastFailureTime=System.currentTimeMillis();
-        if (failureCount>=failureThreshold){
-            status=Status.OPEN;
-        }
-        if (status==Status.HALF_OPEN){
-            status=Status.OPEN;
-        }
-
-    }
 
 }
