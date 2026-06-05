@@ -4,16 +4,16 @@ public class maxSubArray {
 
 
     public int maxSubArray(int[] nums) {
-        int maxSum = 0;
-        int currSum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            currSum = currSum + nums[i];
-            if (currSum > maxSum)
-                maxSum = currSum;
-            if (currSum < 0)
-                currSum = 0;
+        int maxSum = nums[0];
+        int currentSum = nums[0];
+
+        for ( int i=1; i<nums.length;i++){
+            currentSum = Math.max(nums[i], currentSum + nums[i]);
+            maxSum = Math.max(maxSum, currentSum);
+
         }
-        return maxSum;
+
+        return maxSum ;
 
     }
 }

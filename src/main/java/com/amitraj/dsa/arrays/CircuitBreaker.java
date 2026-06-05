@@ -44,7 +44,7 @@ public class CircuitBreaker {
             return true;
         if (status == Status.OPEN)
             return false;
-        
+
         return true;
     }
 
