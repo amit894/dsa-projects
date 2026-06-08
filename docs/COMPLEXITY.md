@@ -39,7 +39,9 @@ This document provides a detailed summary of the time and space complexity for t
 
 | Algorithm | Time Complexity | Space Complexity | Notes |
 | :--- | :--- | :--- | :--- |
-| `Anagram` | $O(N \log N)$ | $O(N)$ | Time dominated by sorting characters; space for character arrays. |
+| `Anagram` | $O(K \log K)$ | $O(K)$ | Time dominated by sorting characters of strings of length $K$. |
+| `GroupAnagrams` | $O(N \cdot K \log K)$ | $O(N \cdot K)$ | $N$ strings of length $K$; sorting each string and storing in a map. |
+| `LongestSubstring` | TBD | TBD | *Implementation pending.* |
 
 ## 5. System Design
 
