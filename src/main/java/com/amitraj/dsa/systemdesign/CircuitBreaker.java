@@ -1,31 +1,34 @@
 package com.amitraj.dsa.arrays;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+
 
 public class CircuitBreaker {
     int failureThreshold;
     long lastFailureTime;
     long resetTimeout;
     int failureCount;
-    public Status status;
+    private Status status;
+    private boolean halfOpenProbeInFlight = false;
 
-    CircuitBreaker (int failureThreshold, int failureCount, long resetTimeout){
+
+    CircuitBreaker (int failureThreshold, long resetTimeout){
         this.failureThreshold = failureThreshold;
-        this.failureCount = failureCount;
+        this.failureCount = 0;
         this.resetTimeout = resetTimeout;
+        this.status= Status.CLOSED;
     }
 
     enum Status {OPEN, CLOSED, HALF_OPEN};
 
-    void recordSuccess(){
+    synchronized void recordSuccess(){
         failureCount = 0;
+        halfOpenProbeInFlight = false;  // release gate
         if (status==Status.HALF_OPEN)
             status=Status.CLOSED;
     }
-    void recordFailure (){
+    synchronized  void recordFailure (){
         failureCount ++;
+        halfOpenProbeInFlight = false;  // release gate
         lastFailureTime = System.currentTimeMillis();
         if (status==Status.HALF_OPEN)
             status=Status.OPEN;
@@ -34,12 +37,15 @@ public class CircuitBreaker {
 
     }
 
-    boolean allowRequest(){
+    synchronized boolean allowRequest(){
         if (status==Status.OPEN && (System.currentTimeMillis()-lastFailureTime)>resetTimeout)
 
-        { status = Status.HALF_OPEN;
+        {  if (halfOpenProbeInFlight) return false;  // gate
+            status = Status.HALF_OPEN;
+            halfOpenProbeInFlight = true;
             return true;
         }
+
         if (status == Status.CLOSED)
             return true;
         if (status == Status.OPEN)
