@@ -42,6 +42,7 @@ This document provides a detailed summary of the time and space complexity for t
 | `Anagram` | $O(K \log K)$ | $O(K)$ | Time dominated by sorting characters of strings of length $K$. |
 | `GroupAnagrams` | $O(N \cdot K \log K)$ | $O(N \cdot K)$ | $N$ strings of length $K$; sorting each string and storing in a map. |
 | `LongestSubstring` | $O(N)$ | $O(\min(N, M))$ | Sliding window approach to find the longest substring without repeating characters. |
+| `LongestPrefix` | TBD | TBD | *Implementation pending.* |
 
 ## 5. System Design
 
