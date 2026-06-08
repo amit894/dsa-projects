@@ -1,51 +1,51 @@
 # Time and Space Complexity Analysis
 
-This document provides a summary of the time and space complexity for the algorithms implemented in the DSA Projects repository.
+This document provides a detailed summary of the time and space complexity for the algorithms implemented in the DSA Projects repository.
 
 ## 1. Arrays
 
 | Algorithm | Time Complexity | Space Complexity | Notes |
 | :--- | :--- | :--- | :--- |
-| `BestBuyStocks` | $O(N)$ | $O(1)$ | Single pass to find the min price and max profit. |
-| `BinarySearch` | $O(\log N)$ | $O(1)$ | Divides the search space by half each iteration. |
-| `DuplicateHashMap` | $O(N)$ | $O(N)$ | Uses a HashMap to store and check for duplicates. |
-| `maxSubArray` | $O(N)$ | $O(1)$ | Implements Kadane's Algorithm. |
-| `MergedIntervals` | $O(N \log N)$ | $O(N)$ | Requires sorting the intervals first. |
-| `Self_Product` | $O(N)$ | $O(N)$ | Conceptual implementation of product arrays. |
-| `TwoSum (Brute Force)` | $O(N^2)$ | $O(1)$ | Nested loop to check all pairs. |
-| `TwoSum (Optimized)` | $O(N)$ | $O(N)$ | Uses a HashMap to store the complement. |
+| `BestBuyStocks` | $O(N)$ | $O(1)$ | Single pass tracking minimum price and maximum potential profit. |
+| `BinarySearch` | $O(\log N)$ | $O(1)$ | Logarithmic time by repeatedly halving the sorted search interval. |
+| `DuplicateHashMap` | $O(N)$ | $O(N)$ | Linear time using a HashMap to track previously seen elements. |
+| `maxSubArray` | $O(N)$ | $O(1)$ | Implements Kadane's Algorithm to find the maximum contiguous subarray sum. |
+| `MergedIntervals` | $O(N \log N)$ | $O(N)$ | Time dominated by sorting intervals; space for the resulting merged list. |
+| `Self_Product` | $O(N)$ | $O(N)$ | Linear time using prefix and suffix product arrays. |
+| `TwoSum (Brute Force)` | $O(N^2)$ | $O(1)$ | Quadratic time by checking all possible pairs of elements. |
+| `TwoSum (Optimized)` | $O(N)$ | $O(N)$ | Linear time using a HashMap to store and look up the required complement. |
 
 ## 2. Linked Lists
 
 | Algorithm | Time Complexity | Space Complexity | Notes |
 | :--- | :--- | :--- | :--- |
 | `CyclicLinkedList` | $O(N)$ | $O(1)$ | Uses Floyd's Cycle-Finding Algorithm (Tortoise and Hare). |
-| `LinkedList (Traverse)` | $O(N)$ | $O(1)$ | Standard linear traversal. |
-| `LinkedList (Add)` | $O(N)$ | $O(1)$ | Traverses to the end of the list to append. |
-| `LinkedList (Remove)` | $O(N)$ | $O(1)$ | Linear search for the node to remove. |
-| `LinkedList (Reverse)` | $O(N)$ | $O(1)$ | Reverses pointers in a single pass. |
-| `MergeSortedList` | $O(N + M)$ | $O(1)$ | Merges two sorted lists into one. |
-| `MiddleLinkedList` | $O(N)$ | $O(1)$ | Uses fast and slow pointers to find the center. |
-| `ReverseLinkedList` | $O(N)$ | $O(1)$ | In-place reversal of the list. |
+| `LinkedList (Traverse)` | $O(N)$ | $O(1)$ | Standard linear traversal from head to tail. |
+| `LinkedList (Add)` | $O(N)$ | $O(1)$ | Linear time to traverse to the end of the list for appending. |
+| `LinkedList (Remove)` | $O(N)$ | $O(1)$ | Linear search to locate the target node for removal. |
+| `LinkedList (Reverse)` | $O(N)$ | $O(1)$ | In-place reversal by updating next pointers in a single pass. |
+| `MergeSortedList` | $O(N + M)$ | $O(1)$ | Linear time relative to the sum of both list lengths. |
+| `MiddleLinkedList` | $O(N)$ | $O(1)$ | Uses a fast and slow pointer approach to find the center node. |
+| `ReverseLinkedList` | $O(N)$ | $O(1)$ | Efficient in-place reversal of the linked list structure. |
 
 ## 3. Trees
 
 | Algorithm | Time Complexity | Space Complexity | Notes |
 | :--- | :--- | :--- | :--- |
-| `BinaryTree (Traversals)` | $O(N)$ | $O(N)$ | In-order, Pre-order, and Post-order; space for recursion stack. |
-| `maxDepthBinaryTree` | $O(N)$ | $O(N)$ | Recursive depth traversal; space for recursion stack. |
+| `BinaryTree (Traversals)` | $O(N)$ | $O(N)$ | Linear time to visit all nodes; space for the implicit recursion stack. |
+| `maxDepthBinaryTree` | $O(N)$ | $O(N)$ | Recursive depth-first traversal; space complexity depends on tree height. |
 
 ## 4. Strings
 
 | Algorithm | Time Complexity | Space Complexity | Notes |
 | :--- | :--- | :--- | :--- |
-| `Anagram` | $O(N \log N)$ | $O(N)$ | Sorting both strings and comparing character by character. |
+| `Anagram` | $O(N \log N)$ | $O(N)$ | Time dominated by sorting characters; space for character arrays. |
 
 ## 5. System Design
 
 | Algorithm | Time Complexity | Space Complexity | Notes |
 | :--- | :--- | :--- | :--- |
-| `CircuitBreaker` | $O(1)$ | $O(1)$ | Direct state transitions and counter updates. |
-| `DistributedLock` | $O(1)$ | $O(1)$ | Based on map lookups for resource locks. |
-| `FixedWindowRateLimiter` | $O(1)$ | $O(U)$ | $U$ = number of unique users tracked in the map. |
-| `SlidingWindowRateLimiter`| $O(K)$ | $O(K)$ | $K$ = maximum requests allowed in the window (cleaning old timestamps). |
+| `CircuitBreaker` | $O(1)$ | $O(1)$ | Constant time for state transitions and failure counter updates. |
+| `DistributedLock` | $O(1)$ | $O(1)$ | Constant time for lock state lookups via resource mapping. |
+| `FixedWindowRateLimiter` | $O(1)$ | $O(U)$ | Constant time for request checks; space grows linearly with unique users ($U$). |
+| `SlidingWindowRateLimiter`| $O(K)$ | $O(K)$ | Time to purge expired timestamps; space grows with request limit ($K$). |
