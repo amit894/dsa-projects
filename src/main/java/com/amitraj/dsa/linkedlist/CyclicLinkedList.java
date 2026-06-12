@@ -20,9 +20,9 @@ public class CyclicLinkedList
     }
 
     boolean hasCyle(){
+
         if (head==null || head.next==null)
             return false;
-
         Node slow = head;
         Node fast = head;
 
@@ -30,7 +30,7 @@ public class CyclicLinkedList
             slow = slow.next;
             fast = fast.next.next;
 
-            if (slow ==fast)
+            if (slow == fast)
                 return true;
         }
 

@@ -2,103 +2,70 @@ package main.java.com.amitraj.dsa.arrays;
 
 public class LinkedList {
 
-    private Node head;
-
-    LinkedList (){
-        this.head = null;
-    }
+    Node head;
 
     private class Node {
         int value;
         Node next;
 
-
-        Node(int value) {
+        Node (int value){
             this.value = value;
-            this.next = null;
-
+            this.next=null;
         }
     }
 
-    void traverseList(){
-        if (head == null){
-            System.out.println("Empty List");
+
+
+    void listTraversal(){
+        if (head == null)
             return;
-          }
         Node current = head;
-        while (current !=null){
+        while ( current!=null){
             System.out.println(current.value);
             current = current.next;
         }
-
-
-    }
-    void addNodeToList(int value){
-        if (head == null){
-            head = new Node(value);
-            return;
-        }
-        Node current = head;
-        while (current.next !=null){
-            current = current.next;
-        }
-        current.next = new Node(value);
     }
 
-    Node removeNodeFromList(int value){
-
-        if (head==null){
-            System.out.println("No element to delete");
-            return null;
-        }
-
-        while (head != null && head.value == value) {
-            head = head.next;
-        }
-
-        if (head == null)
-            return null;
-
-        Node current = head;
-
-        while (current.next!=null ){
-            if (current.next.value == value){
-                current.next = current.next.next;
-            }
-            else{
-                current = current.next;
-            }
-
-        }
-
+    Node insertAtHead(Node newNode){
+        newNode.next = head;
+        head = newNode;
         return head;
 
     }
 
-    Node reverseLinkedList(){
-
-        if (head == null){
-            System.out.println("Empty List");
-            return null;
-        }
-
-        if (head.next ==null){
+    Node insertAtTail(Node newNode){
+        if (head==null){
+            head =newNode;
             return head;
         }
-
         Node current = head;
-        Node prev = null;
-
-        while (current !=null){
-            Node temp = current.next;
-            current.next = prev;
-            prev = current;
-            current = temp;
-
-
+        while (current.next!=null){
+            current = current.next;
         }
-        head = prev;
+        current.next = newNode;
         return head;
 
     }
+
+    Node deleteNode (int value){
+
+        if (head.value==value)
+            return head.next;
+
+        Node current = head;
+
+        while (current.next!=null){
+            if (current.next.value==value){
+                current.next=current.next.next;
+            }
+            else {
+                current=current.next;
+            }
+
+        }
+        return head;
+
+    }
+
+
 }

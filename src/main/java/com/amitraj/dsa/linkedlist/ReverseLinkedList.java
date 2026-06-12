@@ -22,8 +22,9 @@ public class ReverseLinkedList {
 
 
     Node reverseLinkedList(){
-        if (head ==null)
+        if (head == null)
             return null;
+
         if (head.next==null)
             return head;
 
@@ -32,7 +33,7 @@ public class ReverseLinkedList {
 
         while (current!=null){
             Node temp = current.next;
-            current.next = prev;
+            current.next= prev;
             prev = current;
             current = temp;
         }

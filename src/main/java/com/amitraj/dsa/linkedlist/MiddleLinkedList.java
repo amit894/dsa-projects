@@ -19,16 +19,17 @@ public class MiddleLinkedList {
             return null;
         if (head.next==null)
             return head;
+
         Node slow = head;
         Node fast = head;
 
-        while (fast!=null && fast.next!=null ){
-            slow=slow.next;
+        while (fast!=null && fast.next!=null){
             fast = fast.next.next;
+            slow = slow.next;
+
         }
 
-        head = slow;
-        return head;
+        return slow;
 
     }
 
