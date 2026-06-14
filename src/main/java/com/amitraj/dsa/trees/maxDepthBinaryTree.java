@@ -24,9 +24,9 @@ public class maxDepthBinaryTree {
     private int maxDepthBinaryTree(Node root){
         if (root==null)
             return 0;
+        else return (1+ Math.max(maxDepthBinaryTree(root.left),maxDepthBinaryTree(root.right)));
 
-        return (Math.max(1+maxDepthBinaryTree(root.left),(1+maxDepthBinaryTree(root.right))));
-
-        
     }
-}
+
+    }
+

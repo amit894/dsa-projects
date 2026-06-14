@@ -1,68 +1,70 @@
 package main.java.com.amitraj.dsa.arrays;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class BinaryTree {
     Node root;
 
-    BinaryTree (){
-        this.root= null;
-    }
-
-    private class Node{
+    private  class Node{
         int value;
         Node left;
         Node right;
 
-        Node (int value){
-            this.value=value;
+        Node  (int value){
+            this.value = value;
             this.left = null;
             this.right = null;
         }
+
     }
 
-    ArrayList<Integer> inOrderTraversal(){
+    List<Integer> inOrderTraversal(){
         ArrayList<Integer> result = new ArrayList<>();
-        inOrder(result,root);
-        return result;
-
-    };
-
-    void inOrder(ArrayList<Integer> result, Node root){
-        if (root==null)
-            return;
-        inOrder(result,root.left);
-        result.add(root.value);
-        inOrder(result,root.right);
-    };
-    ArrayList<Integer> PreOrderTraversal(){
-        ArrayList<Integer> result = new ArrayList<>();
-        preOrder(result,root);
+        inOrder(this.root,result);
         return result;
     };
 
-    void preOrder(ArrayList<Integer> result, Node root){
+    void inOrder(Node root, List<Integer> result){
         if (root==null)
             return;
+        inOrder(root.left,result);
+        System.out.println(root.value);
         result.add(root.value);
-        preOrder(result,root.left);
-        preOrder(result,root.right);
+        inOrder(root.right,result);
 
-    };
-
-
-    ArrayList<Integer> PostOrderTraversal(){
+    }
+    List<Integer> postOrderTraversal(){
         ArrayList<Integer> result = new ArrayList<>();
-        postOrder(result,root);
+        postOrder(this.root,result);
         return result;
     };
 
-    void postOrder(ArrayList<Integer> result, Node root){
+    void postOrder(Node root, List<Integer> result){
         if (root==null)
             return;
-        postOrder(result,root.left);
-        postOrder(result,root.right);
+        postOrder(root.left,result);
+        postOrder(root.right,result);
+        System.out.println(root.value);
         result.add(root.value);
+    }
 
+
+    List<Integer> preOrderTraversal(){
+        ArrayList<Integer> result = new ArrayList<>();
+        preOrder(this.root,result);
+        return result;
     };
+
+    void preOrder(Node root, List<Integer> result){
+        if (root==null)
+            return;
+        System.out.println(root.value);
+        result.add(root.value);
+        preOrder(root.left,result);
+        preOrder(root.right,result);
+    }
+
+
 }
