@@ -43,6 +43,7 @@ This document provides a detailed summary of the time and space complexity for t
 | `GroupAnagrams` | $O(N \cdot K \log K)$ | $O(N \cdot K)$ | $N$ strings of length $K$; sorting each string and storing in a map. |
 | `LongestSubstring` | $O(N)$ | $O(\min(N, M))$ | Sliding window approach to find the longest substring without repeating characters. |
 | `LongestPrefix` | $O(N \log N + N \cdot K)$ | $O(K)$ | Time dominated by sorting strings and prefix comparison; $N$ = number of strings, $K$ = length of shortest string. |
+| `ASCIISum` | $O(N)$ | $O(1)$ | Single pass through the string to sum uppercase and lowercase ASCII values. |
 
 ## 5. System Design
 
